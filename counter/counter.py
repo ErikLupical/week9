@@ -11,19 +11,24 @@
 
 
 class Counter:
-    def __init__(self):
-        self.__count = 0
+    _instance = None
+
+    def __new__(cls):
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+            cls._instance._count = 0
+        return cls._instance
 
     @property
     def count(self):
-        return self.__count
+        return self._count
 
     def increment(self):
-        self.__count += 1
-        return self.__count
+        self._count += 1
+        return self._count
 
     def __str__(self):
-        return f"{self.__count}"
+        return f"Count: {self._count}"
 
     # TODO write count property
     # TODO write increment method
